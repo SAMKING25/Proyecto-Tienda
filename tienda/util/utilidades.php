@@ -5,6 +5,4 @@
         $salida = preg_replace('!\s+!',' ',$salida);
         return $salida;
     }
-
-
 ?>

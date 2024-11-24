@@ -24,9 +24,22 @@
             $descripcion = $fila["descripcion"];
         }
 
-        if (isset($descripcion)){
-            $sql = "UPDATE categorias SET descripcion = '$descripcion' WHERE descripcion = $descripcion;";
-            $_conexion -> query($sql);
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+            $nueva_descripcion = $_POST["nueva_descripcion"];
+
+            if($nueva_descripcion == ""){
+                $err_nueva_descripcion = "La descripcion es obligatoria";
+            } else {
+                if(strlen($nueva_descripcion) > 255){
+                    $err_nueva_descripcion = "La descripcion no puede tener mas de 255 caracteres";
+                } else{
+                    // Modifica la descripcion
+                    $sql = "UPDATE categorias SET descripcion = '$nueva_descripcion' WHERE descripcion = '$descripcion'";
+                    $_conexion -> query($sql);
+                    $descripcion = $nueva_descripcion;
+                }
+            }
+            
         }
         ?>
         <form class="col-6" action="" method="post" enctype="multipart/form-data">
@@ -36,7 +49,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Descripcion</label>
-                <input class="form-control" type="text" name="descripcion" value="<?php echo $descripcion ?>">
+                <input class="form-control" type="text" name="nueva_descripcion" value="<?php echo $descripcion ?>">
             </div>
             <div class="mb-3">
                 <input type="hidden" name="categoria" value="<?php echo $categoria ?>">

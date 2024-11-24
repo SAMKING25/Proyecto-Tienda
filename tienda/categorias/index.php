@@ -14,12 +14,20 @@
 </head>
 <body>
     <?php
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+            $categoria = $_POST["categoria"];
+            // PREGUNTAR FUNCION HTMLCHARS NO SE PUEDE BORRAR SI METE CARACTERES HTML
+            //  borrar la categoria
+            $sql = "DELETE FROM categorias WHERE categoria = '$categoria'";
+            $_conexion -> query($sql);
+        }
+
         $sql = "SELECT * FROM categorias";
         $resultado = $_conexion -> query($sql);
     ?>
 
     <div class="container">
-        <h1>Tabla animes</h1>
+        <h1>Tabla Categorías</h1>
         <div class="mb-3">
                 <a href="nueva_categoria.php" class="btn btn-primary">Insertar Catergoria</a>
         </div>
@@ -28,6 +36,7 @@
                 <tr>
                     <th>Categoria</th>
                     <th>Descripcion</th>
+                    <th></th>
                     <th></th>
                 </tr>
             </thead>
@@ -41,6 +50,12 @@
                         ?>
                         <td>
                             <a class="btn btn-primary" href="editar_categoria.php?categoria=<?php echo $fila["categoria"] ?>">Editar</a>
+                        </td>
+                        <td>
+                            <form action="" method="post">
+                                <input type="hidden" name="categoria" value="<?php echo $fila["categoria"] ?>">
+                                <input class="btn btn-danger" type="submit" value="Borrar">
+                            </form>
                         </td>
                         </tr>
                     <?php } ?>

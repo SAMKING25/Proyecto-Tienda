@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-
+<!-- PREGUNTAR FUNCION HTMLCHARS NO SE PUEDE BORRAR SI METE CARACTERES HTML -->
     <?php 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $tmp_categoria = depurar($_POST["categoria"]);
@@ -37,7 +37,7 @@
             if($tmp_descripcion == ''){
                 $err_descripcion = "La descripcion es obligatoria";
             } else {
-                if(strlen($tmp_descripcion) > 30){
+                if(strlen($tmp_descripcion) > 255){
                     $err_descripcion = "La descripcion no puede tener mas de 255 caracteres";
                 } else{
                     $descripcion = $tmp_descripcion;
@@ -45,6 +45,7 @@
             }
 
             if (isset($descripcion) && isset($categoria)){
+                // Inserta una nueva categoria
                 $sql = "INSERT INTO categorias (categoria, descripcion)
                     VALUES ('$categoria','$descripcion')";
                 $_conexion -> query($sql);
