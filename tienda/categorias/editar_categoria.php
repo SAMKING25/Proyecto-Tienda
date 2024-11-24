@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevo anime</title>
+    <title>Editar categoria</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <?php
         error_reporting( E_ALL );
         ini_set("display_errors", 1 );    
 
         require('../util/conexion.php');
+        require('../util/utilidades.php');
     ?>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Editar producto</h1>
+        <h1>Editar categoria</h1>
         <?php
         $categoria = $_GET["categoria"];
         $sql = "SELECT * FROM categorias WHERE categoria = '$categoria'";
@@ -28,10 +34,10 @@
             $nueva_descripcion = $_POST["nueva_descripcion"];
 
             if($nueva_descripcion == ""){
-                $err_nueva_descripcion = "La descripcion es obligatoria";
+                $err_descripcion = "La descripcion es obligatoria";
             } else {
                 if(strlen($nueva_descripcion) > 255){
-                    $err_nueva_descripcion = "La descripcion no puede tener mas de 255 caracteres";
+                    $err_descripcion = "La descripcion no puede tener mas de 255 caracteres";
                 } else{
                     // Modifica la descripcion
                     $sql = "UPDATE categorias SET descripcion = '$nueva_descripcion' WHERE descripcion = '$descripcion'";
@@ -50,6 +56,7 @@
             <div class="mb-3">
                 <label class="form-label">Descripcion</label>
                 <input class="form-control" type="text" name="nueva_descripcion" value="<?php echo $descripcion ?>">
+                <?php if(isset($err_descripcion)) echo "<span class='error'>$err_descripcion</span>"; ?>
             </div>
             <div class="mb-3">
                 <input type="hidden" name="categoria" value="<?php echo $categoria ?>">

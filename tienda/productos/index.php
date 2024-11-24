@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla categoria</title>
+    <title>Tabla Productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <?php
         error_reporting( E_ALL );
@@ -29,6 +29,7 @@
         <h1>Tabla Productos</h1>
         <div class="mb-3">
                 <a href="nuevo_producto.php" class="btn btn-primary">Insertar Producto</a>
+                <a href="../categorias/index.php" class="btn btn-success">Ir a tabla de categorias</a>
         </div>
         <table class="table table-info table-striped table-hover">
             <thead class="table-dark">
@@ -51,10 +52,11 @@
                         echo "<td>" . $fila["precio"] ."</td>";
                         echo "<td>" . $fila["categoria"] ."</td>";
                         echo "<td>" . $fila["stock"] ."</td>";
-                        echo "<td>" . $fila["imagen"] ."</td>";
-                        echo "<td>" . $fila["descripcion"] ."</td>";
-                        
                         ?>
+                        <td>
+                            <img width="160" height="200" src="<?php echo $fila["imagen"] ?>">
+                        </td>
+                        <td><?php echo $fila["descripcion"] ?></td>
                         <td>
                             <a class="btn btn-primary" href="editar_producto.php?id_producto=<?php echo $fila["id_producto"] ?>">Editar</a>
                         </td>

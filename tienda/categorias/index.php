@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla categoria</title>
+    <title>Tabla Categoria</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <?php
         error_reporting( E_ALL );
@@ -30,6 +30,7 @@
         <h1>Tabla Categorías</h1>
         <div class="mb-3">
                 <a href="nueva_categoria.php" class="btn btn-primary">Insertar Catergoria</a>
+                <a href="../productos/index.php" class="btn btn-success">Ir a tabla de productos</a>
         </div>
         <table class="table table-info table-striped table-hover">
             <thead class="table-dark">
