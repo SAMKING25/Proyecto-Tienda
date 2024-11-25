@@ -10,6 +10,14 @@
         ini_set("display_errors", 1 );  
 
         require('../util/conexion.php');
+
+        session_start();
+        if (isset($_SESSION["usuario"])) {
+            echo "<h2>Bienvenid@ " . $_SESSION["usuario"] .  "</h2>";
+        }else{
+            header("location: ../usuario/iniciar_sesion.php");
+            exit;
+        }
     ?>
 </head>
 <body>
@@ -28,8 +36,9 @@
     <div class="container">
         <h1>Tabla Productos</h1>
         <div class="mb-3">
-                <a href="nuevo_producto.php" class="btn btn-primary">Insertar Producto</a>
-                <a href="../categorias/index.php" class="btn btn-success">Ir a tabla de categorias</a>
+            <a href="nuevo_producto.php" class="btn btn-primary">Insertar Producto</a>
+            <a href="../categorias/index.php" class="btn btn-success">Ir a tabla de categorias</a>
+            <a class="btn btn-warning" href="../usuario/cerrar_sesion.php">Cerrar sesion</a>
         </div>
         <table class="table table-info table-striped table-hover">
             <thead class="table-dark">

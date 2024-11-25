@@ -148,7 +148,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Descripcion</label>
-                <input class="form-control" type="text" name="nueva_descripcion" value="<?php echo $descripcion_actual ?>">
+                <textarea class="form-control" name="nueva_descripcion"><?php echo $descripcion_actual ?></textarea>
                 <?php if(isset($err_descripcion)) echo "<span class='error'>$err_descripcion</span>"; ?>
             </div>
             <div class="mb-3">

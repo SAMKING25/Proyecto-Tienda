@@ -66,7 +66,7 @@
                     array_push($categorias, $fila["categoria"]);
                 }
 
-                if(!in_array($categorias,$tmp_categoria)){
+                if(!in_array($tmp_categoria,$categorias)){
                     $err_categoria = "La categoria no existe";
                 } else {
                     $categoria = $tmp_categoria;
@@ -158,7 +158,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Descripcion</label>
-                <input type="text" class="form-control" name="descripcion">
+                <textarea class="form-control" name="descripcion"></textarea>
                 <?php if(isset($err_descripcion)) echo "<span class='error'>$err_descripcion</span>"; ?>
             </div>
             <div class="mb-3">
