@@ -58,7 +58,19 @@
             if(strlen($tmp_categoria) > 30){
                 $err_categoria = "La categoria no puede tener mas de 30 caracteres";
             } else{
-                $categoria = $tmp_categoria;
+                $sql = "SELECT * FROM categorias ORDER BY categoria";
+                $resultado = $_conexion -> query($sql);
+                $categorias = [];
+
+                while($fila = $resultado -> fetch_assoc()) {
+                    array_push($categorias, $fila["categoria"]);
+                }
+
+                if(!in_array($categorias,$tmp_categoria)){
+                    $err_categoria = "La categoria no existe";
+                } else {
+                    $categoria = $tmp_categoria;
+                }
             }
         }   
 
@@ -75,7 +87,7 @@
                 $err_imagen = "La ruta de la imagen no puede tener mas de 30 caracteres";
             } else {
                 move_uploaded_file($ubicacion_temporal, $ubicacion_final);
-                
+                $imagen = $nombre_imagen;
             }
         }
         
@@ -90,7 +102,7 @@
             }
         }
 
-        if (isset($nombre) && isset($precio) && isset($categoria) && $nombre_imagen != "" && isset($descripcion)){
+        if (isset($nombre) && isset($precio) && isset($categoria) && isset($imagen) && isset($descripcion)){
             // Inserta un nuevo producto
             $sql = "INSERT INTO productos (nombre, precio, categoria, stock, imagen, descripcion)
             VALUES ('$nombre', $precio, '$categoria', $stock, '$ubicacion_final', '$descripcion')";
