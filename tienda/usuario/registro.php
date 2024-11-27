@@ -55,9 +55,9 @@
                     $patron = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/";
                     if(!preg_match($patron, $tmp_contrasena)){
                         $err_contrasena = "La contraseña tiene que tener letras en mayus y minus, algun numero y puede tener caracteres especiales";
-                    }
-                    $contrasena_cifrada = password_hash($tmp_contrasena,PASSWORD_DEFAULT);
-                    
+                    } else {
+                        $contrasena_cifrada = password_hash($tmp_contrasena,PASSWORD_DEFAULT);
+                    }                    
                 }
             }
 

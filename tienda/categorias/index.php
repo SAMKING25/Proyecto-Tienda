@@ -15,6 +15,7 @@
         if (isset($_SESSION["usuario"])) { ?>
             <h2>Bienvenid@ <?php echo $_SESSION["usuario"] ?> </h2>
             <a class="btn btn-warning" href="../usuario/cerrar_sesion.php">Cerrar sesion</a>
+            <a class="btn btn-primary" href="../usuario/cambiar_credenciales.php?usuario=<?php echo $_SESSION["usuario"] ?>">Cambiar credenciales</a>
         <?php } else {
             header("location: ../usuario/iniciar_sesion.php");
             exit;
@@ -24,8 +25,6 @@
     <?php
         if($_SERVER["REQUEST_METHOD"] == "POST") {
             $categoria = $_POST["categoria"];
-            // PREGUNTAR FUNCION HTMLCHARS NO SE PUEDE BORRAR SI METE CARACTERES HTML
-            //  borrar la categoria
             $sql = "DELETE FROM categorias WHERE categoria = '$categoria'";
             $_conexion -> query($sql);
         }

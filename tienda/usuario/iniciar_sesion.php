@@ -36,7 +36,7 @@
                 if($acceso_concedido){
                     session_start();
                     $_SESSION["usuario"] = $usuario;
-                    header("location: ../productos/index.php");
+                    header("location: ../index.php");
                 }else{
                     $err_contrasena = "La contraseña no es correcta";
                 }

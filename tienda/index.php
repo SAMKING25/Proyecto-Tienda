@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla Productos</title>
+    <title>Inicio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <?php
         error_reporting( E_ALL );
@@ -15,6 +15,7 @@
         if (isset($_SESSION["usuario"])) {
             echo "<h2>Bienvenid@ " . $_SESSION["usuario"] .  "</h2>"; ?>
             <a class="btn btn-warning" href="usuario/cerrar_sesion.php">Cerrar sesion</a> 
+            <a class="btn btn-primary" href="usuario/cambiar_credenciales.php?usuario=<?php echo $_SESSION["usuario"] ?>">Cambiar credenciales</a>
         <?php } else { ?>
             <a class="btn btn-warning" href="usuario/iniciar_sesion.php">Iniciar sesion</a>
         <?php } ?>
@@ -33,7 +34,7 @@
     ?>
 
     <div class="container">
-        <h1>Tabla Productos</h1>
+        <h1>Tabla Inicio</h1>
         <div class="mb-3">
             <?php if (isset($_SESSION["usuario"])) { ?>
                 <a href="productos/index.php" class="btn btn-success">Ir a tabla de productos</a>
