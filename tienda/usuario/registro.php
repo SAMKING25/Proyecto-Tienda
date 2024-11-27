@@ -27,18 +27,38 @@
             if($tmp_usuario == ""){
                 $err_usuario = "El usuario es obligatorio";
             } else {
-                if(strlen($tmp_usuario) > 15){
-                    $err_usuario = "El usuario no puede tener mas de 15 caracteres";
+                $sql="SELECT * FROM usuarios WHERE usuario ='$tmp_usuario'";
+                $resultado = $_conexion -> query($sql);
+
+                if($resultado -> num_rows == 1){
+                    $err_usuario = "El usuario $tmp_usuario ya existe";
                 } else {
-                    $usuario = $tmp_usuario;
+                    if(strlen($tmp_usuario) > 15 || strlen($tmp_usuario) < 3){
+                        $err_usuario = "El usuario no puede tener mas de 15 caracteres o menos de 3";
+                    } else {
+                        $patron = "/^[0-9a-zA-ZáéíóúÁÉÍÓÚ]+$/";
+                        if(!preg_match($patron, $tmp_usuario)){
+                            $err_usuario = "El usuario solo puede tener letras y números";
+                        } else {
+                            $usuario = $tmp_usuario;
+                        }
+                    }
                 }
             }
 
             if($tmp_contrasena == ""){
                 $err_contrasena = "La contraseña es obligatoria";
             } else {
-                $contrasena = $tmp_contrasena;
-                $contrasena_cifrada = password_hash($contrasena,PASSWORD_DEFAULT);
+                if(strlen($tmp_contrasena) > 15 || strlen($tmp_contrasena) < 8){
+                    $err_contrasena = "La contraseña tiene que tener como minimo 8 y maximo 15 caracteres";
+                } else {
+                    $patron = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/";
+                    if(!preg_match($patron, $tmp_contrasena)){
+                        $err_contrasena = "La contraseña tiene que tener letras en mayus y minus, algun numero y puede tener caracteres especiales";
+                    }
+                    $contrasena_cifrada = password_hash($tmp_contrasena,PASSWORD_DEFAULT);
+                    
+                }
             }
 
             if(isset($usuario) && isset($contrasena_cifrada)){
@@ -67,10 +87,12 @@
                 <input class="btn btn-primary" type="submit" value="Registrarse">
             </div>
             <div class="mb-3">
-                <p>Si ya tienes cuenta, inicia sesion</p>
+                <p>¿Ya tienes cuenta?</p>
                 <a class="btn btn-secondary" href="iniciar_sesion.php">Iniciar sesion</a>
+                <a href="../index.php" class="btn btn-outline-success">Volver a inicio</a>
             </div>
         </form>
+        
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

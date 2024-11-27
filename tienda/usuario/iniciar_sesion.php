@@ -60,8 +60,9 @@
                 <input class="btn btn-primary" type="submit" value="Iniciar sesion">
             </div>
             <div class="mb-3">
-                <h3>Si no tienes cuenta, regístrate</h3>
+                <p>¿Todavía no tienes cuenta?</p>
                 <a class="btn btn-secondary" href="registro.php">Registrarse</a>
+                <a href="../index.php" class="btn btn-outline-success">Volver a inicio</a>
             </div>
         </form>
     </div>

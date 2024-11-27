@@ -12,13 +12,13 @@
         require('../util/conexion.php');
 
         session_start();
-        if (isset($_SESSION["usuario"])) {
-            echo "<h2>Bienvenid@ " . $_SESSION["usuario"] .  "</h2>";
-        }else{
+        if (isset($_SESSION["usuario"])) { ?>
+            <h2>Bienvenid@ <?php echo $_SESSION["usuario"] ?> </h2>
+            <a class="btn btn-warning" href="../usuario/cerrar_sesion.php">Cerrar sesion</a>
+        <?php } else {
             header("location: ../usuario/iniciar_sesion.php");
             exit;
-        }
-    ?>
+        } ?>
 </head>
 <body>
     <?php
@@ -39,7 +39,6 @@
         <div class="mb-3">
                 <a href="nueva_categoria.php" class="btn btn-primary">Insertar Catergoria</a>
                 <a href="../productos/index.php" class="btn btn-success">Ir a tabla de productos</a>
-                <a class="btn btn-warning" href="../usuario/cerrar_sesion.php">Cerrar sesion</a>
         </div>
         <table class="table table-info table-striped table-hover">
             <thead class="table-dark">
@@ -69,9 +68,9 @@
                         </td>
                         </tr>
                     <?php } ?>
-                
             </tbody>
         </table>
+        <a href="../index.php" class="btn btn-outline-secondary">Volver a inicio</a>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

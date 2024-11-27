@@ -34,22 +34,32 @@
         if($tmp_nombre == ''){
             $err_nombre = "El nombre es obligatorio";
         } else {
-            if(strlen($tmp_nombre) > 50){
-                $err_nombre = "El nombre no puede tener mas de 50 caracteres";
-            } else{
-                $nombre = $tmp_nombre;
+            if(strlen($tmp_nombre) > 50 || strlen($tmp_nombre) < 2){
+                $err_nombre = "El nombre es de 50 caracteres maximo y 3 minimo";
+            } else {
+                $patron = "/^[0-9a-zA-Z áéíóúÁÉÍÓÚ]+$/";
+                if(!preg_match($patron, $tmp_nombre)){
+                    $err_nombre = "El nombre solo puede tener letras, numeros y espacios";
+                } else{
+                    $nombre = $tmp_nombre;
+                }
             }
         }
 
         if($tmp_precio == ''){
             $err_precio = "El precio es obligatorio";
         } else {
-            $patron = "/^[0-9]{1,4}(\.[0-9]{1,2})?$/";
-            if(!preg_match($patron, $tmp_precio)){
-                $err_precio = "El precio no tiene un formato valido o tamaño";
-            } else{
-                $precio = $tmp_precio;
+            if(!filter_var($tmp_precio,FILTER_VALIDATE_FLOAT)){
+                $err_precio = "El precio tiene que ser un numero";
+            } else {
+                $patron = "/^[0-9]{1,4}(\.[0-9]{1,2})?$/";
+                if(!preg_match($patron, $tmp_precio)){
+                    $err_precio = "El precio solo puede tener 6 numeros de los cuales 2 decimales";
+                } else{
+                    $precio = $tmp_precio;
+                }
             }
+            
         }
 
         if($tmp_categoria == ''){
@@ -77,14 +87,18 @@
         if($tmp_stock == ''){
             $stock = 0;
         } else {
-            $stock = $tmp_stock;
+            if(!filter_var($tmp_stock,FILTER_VALIDATE_INT)){
+                $err_stock = "El stock tiene que ser un numero entero";
+            } else {
+                $stock = $tmp_stock;
+            }
         }
 
         if($nombre_imagen == ""){
             $err_imagen = "La imagen es obligatoria";
         } else {
-            if(strlen($ubicacion_final) > 60){
-                $err_imagen = "La ruta de la imagen no puede tener mas de 30 caracteres";
+            if(strlen($nombre_imagen) > 60){
+                $err_imagen = "La ruta de la imagen no puede tener mas de 60 caracteres";
             } else {
                 move_uploaded_file($ubicacion_temporal, $ubicacion_final);
                 $imagen = $nombre_imagen;
@@ -105,7 +119,7 @@
         if (isset($nombre) && isset($precio) && isset($categoria) && isset($imagen) && isset($descripcion)){
             // Inserta un nuevo producto
             $sql = "INSERT INTO productos (nombre, precio, categoria, stock, imagen, descripcion)
-            VALUES ('$nombre', $precio, '$categoria', $stock, '$ubicacion_final', '$descripcion')";
+            VALUES ('$nombre', $precio, '$categoria', $stock, '$imagen', '$descripcion')";
             $_conexion -> query($sql);
         }
         

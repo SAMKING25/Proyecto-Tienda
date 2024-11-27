@@ -18,7 +18,6 @@
     </style>
 </head>
 <body>
-<!-- PREGUNTAR FUNCION HTMLCHARS NO SE PUEDE BORRAR SI METE CARACTERES HTML -->
     <?php 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $tmp_categoria = depurar($_POST["categoria"]);
@@ -27,8 +26,8 @@
             if($tmp_categoria == ''){
                 $err_categoria = "La categoría es obligatoria";
             } else {
-                if(strlen($tmp_categoria) > 30){
-                    $err_categoria = "La categoria no puede tener mas de 30 caracteres";
+                if(strlen($tmp_categoria) > 30 || strlen($tmp_categoria) < 2){
+                    $err_categoria = "La categoria no puede tener mas de 30 caracteres ni menos de 2";
                 } else{
                     $categoria = $tmp_categoria;
                 }

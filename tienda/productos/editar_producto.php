@@ -50,30 +50,39 @@
             $nuevo_stock = depurar($_POST["nuevo_stock"]);
             $nueva_descripcion = depurar($_POST["nueva_descripcion"]);
 
-            if($nuevo_nombre == ''){
+            if($tmp_nombre == ''){
                 $err_nombre = "El nombre es obligatorio";
             } else {
-                if(strlen($nuevo_nombre) > 50){
-                    $err_nombre = "El nombre no puede tener mas de 50 caracteres";
-                } else{
-                    // Modifica el nombre
-                    $sql = "UPDATE productos SET nombre = '$nuevo_nombre' WHERE nombre = '$nombre_actual'";
-                    $_conexion -> query($sql);
-                    $nombre_actual = $nuevo_nombre;
+                if(strlen($tmp_nombre) > 50 || strlen($tmp_nombre) < 2){
+                    $err_nombre = "El nombre es de 50 caracteres maximo y 3 minimo";
+                } else {
+                    $patron = "/^[0-9a-zA-Z áéíóúÁÉÍÓÚ]+$/";
+                    if(!preg_match($patron, $tmp_nombre)){
+                        $err_nombre = "El nombre solo puede tener letras, numeros y espacios";
+                    } else {
+                        // Modifica el nombre
+                        $sql = "UPDATE productos SET nombre = '$nuevo_nombre' WHERE nombre = '$nombre_actual'";
+                        $_conexion -> query($sql);
+                        $nombre_actual = $nuevo_nombre;
+                    }
                 }
             }
 
-            if($nuevo_precio == ''){
+            if($tmp_precio == ''){
                 $err_precio = "El precio es obligatorio";
             } else {
-                $patron = "/^[0-9]{1,4}(\.[0-9]{1,2})?$/";
-                if(!preg_match($patron, $nuevo_precio)){
-                    $err_precio = "El precio no tiene un formato o tamaño valido";
-                } else{
-                    // Modifica el precio
-                    $sql = "UPDATE productos SET precio = '$nuevo_precio' WHERE precio = '$precio_actual'";
-                    $_conexion -> query($sql);
-                    $precio_actual = $nuevo_precio;
+                if(!filter_var($tmp_precio,FILTER_VALIDATE_FLOAT)){
+                    $err_precio = "El precio tiene que ser un numero";
+                } else {
+                    $patron = "/^[0-9]{1,4}(\.[0-9]{1,2})?$/";
+                    if(!preg_match($patron, $tmp_precio)){
+                        $err_precio = "El precio solo puede tener 6 de los cuales 2 decimales";
+                    } else{
+                        // Modifica el precio
+                        $sql = "UPDATE productos SET precio = '$nuevo_precio' WHERE precio = '$precio_actual'";
+                        $_conexion -> query($sql);
+                        $precio_actual = $nuevo_precio;
+                    }
                 }
             }
 
@@ -90,13 +99,17 @@
                 }
             }  
 
-            if($nuevo_stock == ''){
-                $stock_actual = 0;
+            if($tmp_stock == ''){
+                $stock = 0;
             } else {
-                // Modifica el stock
-                $sql = "UPDATE productos SET stock = '$nuevo_stock' WHERE stock = '$stock_actual'";
-                $_conexion -> query($sql);
-                $stock_actual = $nuevo_stock;
+                if(!filter_var($tmp_stock,FILTER_VALIDATE_INT)){
+                    $err_stock = "El stock tiene que ser un numero entero";
+                } else {
+                    // Modifica el stock
+                    $sql = "UPDATE productos SET stock = '$nuevo_stock' WHERE stock = '$stock_actual'";
+                    $_conexion -> query($sql);
+                    $stock_actual = $nuevo_stock;
+                }
             }
 
             if($nueva_descripcion == ""){
