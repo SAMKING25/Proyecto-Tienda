@@ -37,17 +37,24 @@
         $ubicacion_temporal = $_FILES["imagen"]["tmp_name"];
         $ubicacion_final = "../imagenes/$nombre_imagen";
 
-        if($tmp_nombre == ''){
-            $err_nombre = "El nombre es obligatorio";
-        } else {
-            if(strlen($tmp_nombre) > 50 || strlen($tmp_nombre) < 2){
-                $err_nombre = "El nombre es de 50 caracteres maximo y 3 minimo";
+        $sql="SELECT * FROM usuarios WHERE usuario ='$usuario'";
+            $resultado=$_conexion -> query($sql);
+
+        if($resultado -> num_rows == 0){
+            $err_usuario = "El usuario $usuario no existe";
+        }else{
+            if($tmp_nombre == ''){
+                $err_nombre = "El nombre es obligatorio";
             } else {
-                $patron = "/^[0-9a-zA-Z áéíóúÁÉÍÓÚ]+$/";
-                if(!preg_match($patron, $tmp_nombre)){
-                    $err_nombre = "El nombre solo puede tener letras, numeros y espacios";
-                } else{
-                    $nombre = $tmp_nombre;
+                if(strlen($tmp_nombre) > 50 || strlen($tmp_nombre) < 2){
+                    $err_nombre = "El nombre es de 50 caracteres maximo y 3 minimo";
+                } else {
+                    $patron = "/^[0-9a-zA-Z áéíóúÁÉÍÓÚ]+$/";
+                    if(!preg_match($patron, $tmp_nombre)){
+                        $err_nombre = "El nombre solo puede tener letras, numeros y espacios";
+                    } else{
+                        $nombre = $tmp_nombre;
+                    }
                 }
             }
         }
