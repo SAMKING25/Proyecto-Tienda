@@ -29,13 +29,20 @@
             $tmp_categoria = depurar($_POST["categoria"]);
             $tmp_descripcion = depurar($_POST["descripcion"]); 
 
-            if($tmp_categoria == ''){
-                $err_categoria = "La categoría es obligatoria";
-            } else {
-                if(strlen($tmp_categoria) > 30 || strlen($tmp_categoria) < 2){
-                    $err_categoria = "La categoria no puede tener mas de 30 caracteres ni menos de 2";
-                } else{
-                    $categoria = $tmp_categoria;
+            $sql="SELECT * FROM categorias WHERE categoria ='$tmp_categoria'";
+            $resultado=$_conexion -> query($sql);
+
+            if($resultado -> num_rows == 1){
+                $err_categoria = "La categoria $tmp_categoria ya existe";
+            }else{
+                if($tmp_categoria == ''){
+                    $err_categoria = "La categoría es obligatoria";
+                } else {
+                    if(strlen($tmp_categoria) > 30 || strlen($tmp_categoria) < 2){
+                        $err_categoria = "La categoria no puede tener mas de 30 caracteres ni menos de 2";
+                    } else{
+                        $categoria = $tmp_categoria;
+                    }
                 }
             }
 
