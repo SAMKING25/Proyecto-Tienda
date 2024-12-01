@@ -21,14 +21,6 @@ CREATE TABLE usuarios (
 	usuario VARCHAR(15) PRIMARY KEY,
     contrasena VARCHAR(255)
 );
-
-SELECT * FROM productos;
-SELECT * FROM usuarios;
-SELECT * FROM categorias;
-
-INSERT INTO categorias VALUES ('Juguete', 'objetos de ocio para menores');
-INSERT INTO productos (nombre, precio, categoria, descripcion) 
-	VALUES ('Barbie', 3, 'Juguete', 'Muñeca barbie');
     
 commit;
 

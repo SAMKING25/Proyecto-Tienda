@@ -40,7 +40,7 @@
         if($tmp_nombre == ''){
             $err_nombre = "El nombre es obligatorio";
         } else {
-            if(strlen($tmp_nombre) > 50 || strlen($tmp_nombre) < 2){
+            if(strlen($tmp_nombre) > 50 || strlen($tmp_nombre) < 3){
                 $err_nombre = "El nombre es de 50 caracteres maximo y 3 minimo";
             } else {
                 $patron = "/^[0-9a-zA-Z áéíóúÁÉÍÓÚ]+$/";
@@ -84,14 +84,14 @@
                 }
 
                 if(!in_array($tmp_categoria,$categorias)){
-                    $err_categoria = "La categoria no existe";
+                    $err_categoria = "La categoria $tmp_categoria no existe";
                 } else {
                     $categoria = $tmp_categoria;
                 }
             }
         }   
 
-        if($tmp_stock == ''){
+        if($tmp_stock == '' || $nuevo_stock == 0){
             $stock = 0;
         } else {
             if(!filter_var($tmp_stock,FILTER_VALIDATE_INT)){

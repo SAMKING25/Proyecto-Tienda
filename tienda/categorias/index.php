@@ -25,8 +25,16 @@
     <?php
         if($_SERVER["REQUEST_METHOD"] == "POST") {
             $categoria = $_POST["categoria"];
-            $sql = "DELETE FROM categorias WHERE categoria = '$categoria'";
-            $_conexion -> query($sql);
+            $sql="SELECT * FROM productos WHERE categoria ='$categoria'";
+            $resultado=$_conexion -> query($sql);
+
+            if($resultado -> num_rows == 1){
+                $err_usuario = "No puedes borrar la categoria";
+            } else {
+                $sql = "DELETE FROM categorias WHERE categoria = '$categoria'";
+                $_conexion -> query($sql);
+            }
+            
         }
 
         $sql = "SELECT * FROM categorias";

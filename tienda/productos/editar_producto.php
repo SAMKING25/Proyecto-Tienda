@@ -56,36 +56,36 @@
             $nuevo_stock = depurar($_POST["nuevo_stock"]);
             $nueva_descripcion = depurar($_POST["nueva_descripcion"]);
 
-            if($tmp_nombre == ''){
+            if($nuevo_nombre == ''){
                 $err_nombre = "El nombre es obligatorio";
             } else {
-                if(strlen($tmp_nombre) > 50 || strlen($tmp_nombre) < 2){
+                if(strlen($nuevo_nombre) > 50 || strlen($nuevo_nombre) < 3){
                     $err_nombre = "El nombre es de 50 caracteres maximo y 3 minimo";
                 } else {
                     $patron = "/^[0-9a-zA-Z áéíóúÁÉÍÓÚ]+$/";
-                    if(!preg_match($patron, $tmp_nombre)){
+                    if(!preg_match($patron, $nuevo_nombre)){
                         $err_nombre = "El nombre solo puede tener letras, numeros y espacios";
                     } else {
                         // Modifica el nombre
-                        $sql = "UPDATE productos SET nombre = '$nuevo_nombre' WHERE nombre = '$nombre_actual'";
+                        $sql = "UPDATE productos SET nombre = '$nuevo_nombre' WHERE id_producto = '$id_producto'";
                         $_conexion -> query($sql);
                         $nombre_actual = $nuevo_nombre;
                     }
                 }
             }
 
-            if($tmp_precio == ''){
+            if($nuevo_precio == ''){
                 $err_precio = "El precio es obligatorio";
             } else {
-                if(!filter_var($tmp_precio,FILTER_VALIDATE_FLOAT)){
+                if(!filter_var($nuevo_precio,FILTER_VALIDATE_FLOAT)){
                     $err_precio = "El precio tiene que ser un numero";
                 } else {
                     $patron = "/^[0-9]{1,4}(\.[0-9]{1,2})?$/";
-                    if(!preg_match($patron, $tmp_precio)){
+                    if(!preg_match($patron, $nuevo_precio)){
                         $err_precio = "El precio solo puede tener 6 de los cuales 2 decimales";
                     } else{
                         // Modifica el precio
-                        $sql = "UPDATE productos SET precio = '$nuevo_precio' WHERE precio = '$precio_actual'";
+                        $sql = "UPDATE productos SET precio = '$nuevo_precio' WHERE id_producto = '$id_producto'";
                         $_conexion -> query($sql);
                         $precio_actual = $nuevo_precio;
                     }
@@ -99,20 +99,20 @@
                     $err_categoria = "La categoria no puede tener mas de 30 caracteres";
                 } else{
                     // Modifica la categoria
-                    $sql = "UPDATE productos SET categoria = '$nueva_categoria' WHERE categoria = '$categoria_actual'";
+                    $sql = "UPDATE productos SET categoria = '$nueva_categoria' WHERE id_producto = '$id_producto'";
                     $_conexion -> query($sql);
                     $categoria_actual = $nueva_categoria;
                 }
             }  
 
-            if($tmp_stock == ''){
-                $stock = 0;
+            if($nuevo_stock == '' || $nuevo_stock == 0){
+                $stock_actual = 0;
             } else {
-                if(!filter_var($tmp_stock,FILTER_VALIDATE_INT)){
+                if(!filter_var($nuevo_stock,FILTER_VALIDATE_INT)){
                     $err_stock = "El stock tiene que ser un numero entero";
                 } else {
                     // Modifica el stock
-                    $sql = "UPDATE productos SET stock = '$nuevo_stock' WHERE stock = '$stock_actual'";
+                    $sql = "UPDATE productos SET stock = $nuevo_stock WHERE id_producto = '$id_producto'";
                     $_conexion -> query($sql);
                     $stock_actual = $nuevo_stock;
                 }
@@ -125,7 +125,7 @@
                     $err_descripcion = "La descripcion no puede tener mas de 255 caracteres";
                 } else{
                     // Modifica la descripcion
-                    $sql = "UPDATE productos SET descripcion = '$nueva_descripcion' WHERE descripcion = '$descripcion_actual'";
+                    $sql = "UPDATE productos SET descripcion = '$nueva_descripcion' WHERE id_producto = '$id_producto'";
                     $_conexion -> query($sql);
                     $descripcion_actual = $nueva_descripcion;
                 }
