@@ -20,6 +20,11 @@
             header("location: ../usuario/iniciar_sesion.php");
             exit;
         } ?>
+        <style>
+            .error {
+                color: red;
+            }
+        </style>
 </head>
 <body>
     <?php
@@ -27,9 +32,9 @@
             $categoria = $_POST["categoria"];
             $sql="SELECT * FROM productos WHERE categoria ='$categoria'";
             $resultado=$_conexion -> query($sql);
-
-            if($resultado -> num_rows == 1){
-                $err_usuario = "No puedes borrar la categoria";
+            
+            if($resultado -> num_rows >= 1){
+                $err_borrar = "No puedes borrar la categoria sin borrar los objetos asociados";
             } else {
                 $sql = "DELETE FROM categorias WHERE categoria = '$categoria'";
                 $_conexion -> query($sql);
@@ -43,6 +48,7 @@
 
     <div class="container">
         <h1>Tabla Categorías</h1>
+        <?php if(isset($err_borrar)) echo "<h3 class='error'>$err_borrar</h3>"; ?>
         <div class="mb-3">
                 <a href="nueva_categoria.php" class="btn btn-primary">Insertar Catergoria</a>
                 <a href="../productos/index.php" class="btn btn-success">Ir a tabla de productos</a>
