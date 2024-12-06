@@ -111,10 +111,14 @@
                 if(!filter_var($nuevo_stock,FILTER_VALIDATE_INT)){
                     $err_stock = "El stock tiene que ser un numero entero";
                 } else {
-                    // Modifica el stock
-                    $sql = "UPDATE productos SET stock = $nuevo_stock WHERE id_producto = '$id_producto'";
-                    $_conexion -> query($sql);
-                    $stock_actual = $nuevo_stock;
+                    if($nuevo_stock < 0 || $nuevo_stock > 2147483647){
+                        $err_stock = "El stock tiene que ser como maximo 2147483647";
+                    } else{
+                        // Modifica el stock
+                        $sql = "UPDATE productos SET stock = $nuevo_stock WHERE id_producto = '$id_producto'";
+                        $_conexion -> query($sql);
+                        $stock_actual = $nuevo_stock;
+                    }
                 }
             }
 

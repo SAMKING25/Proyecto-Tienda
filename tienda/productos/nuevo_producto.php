@@ -91,13 +91,17 @@
             }
         }   
 
-        if($tmp_stock == '' || $nuevo_stock == 0){
+        if($tmp_stock == '' || $tmp_stock == 0){
             $stock = 0;
         } else {
             if(!filter_var($tmp_stock,FILTER_VALIDATE_INT)){
                 $err_stock = "El stock tiene que ser un numero entero";
             } else {
+                if($tmp_stock < 0 || $tmp_stock > 2147483647){
+                    $err_stock = "El stock tiene que ser como maximo 2147483647";
+                } else{
                 $stock = $tmp_stock;
+                }
             }
         }
 
